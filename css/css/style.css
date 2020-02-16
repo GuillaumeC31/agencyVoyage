@@ -1,0 +1,39 @@
+/* Navbar*/
+nav a {
+  color: white;
+}
+
+nav a:hover {
+  color: white;
+  text-decoration: none;
+}
+
+a {
+  color: white;
+}
+
+/* Images et Background*/
+#bg_img_jumbotron {
+  background-image: url("../img/hotel-cover.jpg");
+  background-position: center;
+  background-size: cover;
+  position: 50% 50%;
+}
+
+#bg_img {
+  background-image: url("../img/voyage-bg.jpg");
+  background-position: center;
+  background-size: cover;
+  position: 50% 50%;
+}
+
+/* Effets textes*/
+.shadow_text {
+  text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.54);
+}
+
+/* Footer*/
+footer {
+  font-size: 0.7em;
+  color: white;
+}
