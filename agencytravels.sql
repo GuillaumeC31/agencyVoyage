@@ -2,10 +2,10 @@
 -- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1
--- Généré le :  mar. 28 jan. 2020 à 16:33
+-- Hôte : 127.0.0.1:3306
+-- Généré le :  mer. 26 fév. 2020 à 18:00
 -- Version du serveur :  10.4.10-MariaDB
--- Version de PHP :  7.3.12
+-- Version de PHP :  7.4.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -28,14 +28,19 @@ SET time_zone = "+00:00";
 -- Structure de la table `countries`
 --
 
-CREATE TABLE `countries` (
-  `id` smallint(5) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `countries`;
+CREATE TABLE IF NOT EXISTS `countries` (
+  `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT,
   `code` int(3) NOT NULL,
   `alpha2` varchar(2) NOT NULL,
   `alpha3` varchar(3) NOT NULL,
   `nom_en_gb` varchar(45) NOT NULL,
-  `nom_fr_fr` varchar(45) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `nom_fr_fr` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `alpha2` (`alpha2`),
+  UNIQUE KEY `alpha3` (`alpha3`),
+  UNIQUE KEY `code_unique` (`code`)
+) ENGINE=MyISAM AUTO_INCREMENT=242 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `countries`
@@ -290,15 +295,17 @@ INSERT INTO `countries` (`id`, `code`, `alpha2`, `alpha3`, `nom_en_gb`, `nom_fr_
 -- Structure de la table `hostel`
 --
 
-CREATE TABLE `hostel` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `hostel`;
+CREATE TABLE IF NOT EXISTS `hostel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `adress` text NOT NULL,
   `Postal code` tinytext NOT NULL,
   `city` varchar(255) NOT NULL,
   `rating_stars` tinyint(5) NOT NULL,
   `description` text NOT NULL,
-  `pays_id` int(11) NOT NULL
+  `pays_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -307,11 +314,13 @@ CREATE TABLE `hostel` (
 -- Structure de la table `openings`
 --
 
-CREATE TABLE `openings` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `openings`;
+CREATE TABLE IF NOT EXISTS `openings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `day` date NOT NULL,
   `start` time NOT NULL,
-  `end` time NOT NULL
+  `end` time NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -320,8 +329,9 @@ CREATE TABLE `openings` (
 -- Structure de la table `travels`
 --
 
-CREATE TABLE `travels` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `travels`;
+CREATE TABLE IF NOT EXISTS `travels` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `entitled` varchar(255) NOT NULL,
   `hostel_name` varchar(255) NOT NULL,
   `country_id` int(11) NOT NULL,
@@ -329,8 +339,9 @@ CREATE TABLE `travels` (
   `term` varchar(255) NOT NULL,
   `price` varchar(10) NOT NULL,
   `picture` varchar(255) NOT NULL,
-  `actived` varchar(10) NOT NULL DEFAULT 'off'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `actived` varchar(10) NOT NULL DEFAULT 'off',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `travels`
@@ -343,7 +354,7 @@ INSERT INTO `travels` (`id`, `entitled`, `hostel_name`, `country_id`, `descripti
 (10, 'Costa Rica en Folie', 'Hôtel del Amor', 54, 'Venez découvrir San José. Capitale et plus grande ville du Costa Rica. Elle est également la capitale de la province de San José. Fondée en 1738, la ville devient capitale du Costa Rica en 1823 à la place de Cartago.', '3 semaines', '799.31', 'Costa-Rica-en-Folie-hotel_004.jpg', 'on'),
 (11, 'Semaine à Las Vegas', 'Hotel du Strip', 231, 'Bienvenue au Nevada. État de l\'ouest des États-Unis caractérisé par ses grandes étendues désertiques et ses casinos et temples du divertissement ouverts 24h/24, qui ont rendu célèbre la plus grande ville de l\'État, Las Vegas au vous séjournerez.', '1 semaine', '2500.35', 'Semaine-a-Las-Vegas-hotel_005.jpg', 'on'),
 (12, 'New York New york', 'Trump Tower', 231, 'Plus qu\'une chanson, venez découvrir cette célèbre ville de la cote Est des Etats-Unis, pleine de surprises le temps d\'un weekend.', '2 jours', '799.31', 'New-York-New-york-hotel_006.jpg', 'on'),
-(13, 'Séjour pour les bois sans soif', 'Hotel de la picole', 107, 'Faut faire comme avec les scorpions qui se suicident quand ils sont entourés par le feu. Ben je suis pas mystérieux moi! J’suis même pas solitaire. Droit devant, en plein dans leurs tronches. Mais qu’est c’que ça peut vous foutre, de toute façon, c’est pas vous qui l’avez faite, si?Faut faire comme avec les scorpions qui se suicident quand ils sont entourés par le feu. Ben je suis pas mystérieux moi! J’suis même pas solitaire. Droit devant, en plein dans leurs tronches. Mais qu’est c’que ça peut vous foutre, de toute façon, c’est pas vous qui l’avez faite, si?Faut faire comme avec les scorpions qui se suicident quand ils sont entourés par le feu. Ben je suis pas mystérieux moi! J’suis même pas solitaire. Droit devant, en plein dans leurs tronches. Mais qu’est c’que ça peut vous foutre, de toute façon, c’est pas vous qui l’avez faite, si?', '2 semaines', '1259.54', 'Sejour-pour-les-bois-sans-soif-Semaine-a-Las-Vegas-hotel_005.jpg', 'off');
+(13, 'Voyage itinérant Irlande -ouest', 'Hotel du Cennemara', 107, 'Vous aimerez\r\nDe château en manoir de campagne, vos adresses country chic dans le Burren et le Connemara\r\nLandes rousses, falaises noires et plages turquoise : les paysages préservés de l’ouest de l’Irlande\r\nA vélo sur Inishbofin, en balade avec une herboriste sur le plateau du Burren : c’est prévu !\r\nAdresses de charme, voiture, GPS et bonnes adresses, conciergerie francophone : les + Voyageurs', '2 semaines', '1595.00', 'Sejour-pour-les-bois-sans-soif-Semaine-a-Las-Vegas-hotel_005.jpg', 'on');
 
 -- --------------------------------------------------------
 
@@ -351,13 +362,15 @@ INSERT INTO `travels` (`id`, `entitled`, `hostel_name`, `country_id`, `descripti
 -- Structure de la table `users`
 --
 
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `login` varchar(40) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `admin_right` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `admin_right` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `users`
@@ -365,78 +378,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `login`, `email`, `password`, `admin_right`) VALUES
 (2, 'Admin', 'admin@agencevoyage.com', '$2y$10$js2JhSQilEJ4.sHTPiAX4OsUEejI0D1p2wRlV..JsbVrEElpWfc.W', 1),
-(3, 'user_01', 'user1@agencevoyage.com', '$2y$10$j/7aAolwUzPXL/1I1L4kHOMUOtLb1zFtTF.CWOFhE8iU7l5mlevF2', 0);
-
---
--- Index pour les tables déchargées
---
-
---
--- Index pour la table `countries`
---
-ALTER TABLE `countries`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `alpha2` (`alpha2`),
-  ADD UNIQUE KEY `alpha3` (`alpha3`),
-  ADD UNIQUE KEY `code_unique` (`code`);
-
---
--- Index pour la table `hostel`
---
-ALTER TABLE `hostel`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `openings`
---
-ALTER TABLE `openings`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `travels`
---
-ALTER TABLE `travels`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT pour les tables déchargées
---
-
---
--- AUTO_INCREMENT pour la table `countries`
---
-ALTER TABLE `countries`
-  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=242;
-
---
--- AUTO_INCREMENT pour la table `hostel`
---
-ALTER TABLE `hostel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `openings`
---
-ALTER TABLE `openings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `travels`
---
-ALTER TABLE `travels`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
--- AUTO_INCREMENT pour la table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+(3, 'user_01', 'user1@agencevoyage.com', '$2y$10$XOQ/Mv4Rtiv7YSKalgkQhO1jZrI3JJTlVQheQS7OspwtzqMH79Y.6', 0);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
